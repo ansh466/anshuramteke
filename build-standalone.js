@@ -1,265 +1,266 @@
-const PLAY_STORE_URL =
-  "https://play.google.com/store/apps/details?id=com.mobile4k.hdwallpaper&hl=en_IN";
-const CONTACT_EMAIL = "aramteke19@gmail.com";
-
-const playStoreBtn = `<a href="${PLAY_STORE_URL}" class="btn btn--primary" target="_blank" rel="noopener">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5ZM16.81 15.12L6.05 21.34L14.54 12.85L16.81 15.12ZM20.16 10.81C20.5 11.08 20.75 11.5 20.75 12C20.75 12.5 20.53 12.9 20.18 13.18L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81ZM6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z"/></svg>
-  Get on Play Store
-</a>`;
-
-const APP_ICON = "assets/hd-wallpaper-icon.png";
-const NEXORA_LOGO = "assets/nexora-logo.png";
-const NEXORA_ICON = "assets/nexora-icon.png";
-const appIconImg = (sizeClass = "") =>
-  `<div class="app-icon app-icon--image${sizeClass ? ` ${sizeClass}` : ""}"><img src="${APP_ICON}" alt="HD Wallpaper app icon" width="80" height="80" /></div>`;
-
+/**
+ * Builds nexora-applab.html — professional theme, icons only (no feature graphics).
+ */
 const fs = require("fs");
+
+const EMAIL = "aramteke19@gmail.com";
+const ARROW_PLAY =
+  "https://play.google.com/store/apps/details?id=com.arrowgo.puzzlegame&hl=en_IN";
+const HD_PLAY =
+  "https://play.google.com/store/apps/details?id=com.mobile4k.hdwallpaper&hl=en_IN";
+
+const PATHS = {
+  nexoraLogo: "assets/nexora-logo.png",
+  nexoraIcon: "assets/nexora-icon.png",
+  hdIcon: "assets/hd-wallpaper-icon.png",
+  arrowIcon: "assets/arrow-go-icon.png",
+};
+
+const FALLBACKS = {
+  [PATHS.nexoraLogo]:
+    "C:/Users/ANSHU/.cursor/projects/c-Users-ANSHU-hd-wallpaper/assets/c__Users_ANSHU_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_nexora_applabs_logo_4096x2304-92c03647-ea1e-42a2-8484-c20cf6a2be65.png",
+  [PATHS.nexoraIcon]:
+    "C:/Users/ANSHU/.cursor/projects/c-Users-ANSHU-hd-wallpaper/assets/c__Users_ANSHU_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_512-f58db368-aec0-4f00-adf0-be81bbb2d467.png",
+  [PATHS.hdIcon]:
+    "C:/Users/ANSHU/.cursor/projects/c-Users-ANSHU-hd-wallpaper/assets/c__Users_ANSHU_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_hdwallpaper_appIcon-24feec15-d0cf-4e58-9dfa-8f525659e055.png",
+  [PATHS.arrowIcon]:
+    "C:/Users/ANSHU/.cursor/projects/c-Users-ANSHU-hd-wallpaper/assets/c__Users_ANSHU_AppData_Roaming_Cursor_User_workspaceStorage_empty-window_images_arrow_go_icon-49fe88f9-a9a1-4b8b-9d23-471309fd7ad0.png",
+};
+
+function ensure() {
+  fs.mkdirSync("assets", { recursive: true });
+  for (const [dest, src] of Object.entries(FALLBACKS)) {
+    if (!fs.existsSync(dest) && fs.existsSync(src)) fs.copyFileSync(src, dest);
+  }
+}
+
+function uri(p) {
+  const file = fs.existsSync(p) ? p : FALLBACKS[p];
+  if (!file || !fs.existsSync(file)) {
+    console.warn("Missing", p);
+    return p;
+  }
+  return `data:image/png;base64,${fs.readFileSync(file).toString("base64")}`;
+}
+
+ensure();
+const U = {
+  logo: uri(PATHS.nexoraLogo),
+  mark: uri(PATHS.nexoraIcon),
+  hd: uri(PATHS.hdIcon),
+  arrow: uri(PATHS.arrowIcon),
+};
+
 const css = fs.readFileSync("css/style.css", "utf8");
 
-const categories = [
-  ["Animals", "🐾", "#1B4332", "#40916C"],
-  ["Babies & Kids", "👶", "#5C4D7D", "#E07A5F"],
-  ["Birds", "🕊️", "#0077B6", "#90E0EF"],
-  ["Cars", "🚗", "#2B2D42", "#EF233C"],
-  ["Flowers", "🌸", "#9D4EDD", "#FFAFCC"],
-  ["God", "🙏", "#7F5539", "#F4A261"],
-  ["Love", "❤️", "#9B2226", "#FF758F"],
-  ["Music", "🎵", "#3A0CA3", "#4CC9F0"],
-  ["Nature", "🌿", "#386641", "#A7C957"],
-  ["Night", "🌙", "#03045E", "#7209B7"],
-  ["Rain", "🌧️", "#023E8A", "#48CAE4"],
-  ["Random", "✨", "#6A0572", "#AB83F6"],
-  ["Sunshine", "☀️", "#E85D04", "#FFD60A"],
-  ["Texture", "🎨", "#495057", "#ADB5BD"],
-];
-
-const mockGrid = categories
-  .slice(0, 6)
-  .map(
-    (c) =>
-      `<div class="mock-cat" style="background:linear-gradient(135deg,${c[2]},${c[3]})"><span class="mock-cat__label">${c[1]} ${c[0].split(" ")[0]}</span></div>`
-  )
-  .join("");
-
-const catGrid = categories
-  .map(
-    (c) =>
-      `<div class="category-chip glass-card" style="background:linear-gradient(135deg,${c[2]}33,${c[3]}22)"><span class="category-chip__emoji">${c[1]}</span><span class="category-chip__name">${c[0]}</span><span class="category-chip__count">50 wallpapers</span></div>`
-  )
-  .join("");
-
-const features = [
-  ["📂", "Category Grid", "Browse 14 categories with live preview thumbnails in a beautiful 2-column grid layout."],
-  ["🔍", "Full-Screen Preview", "Tap any wallpaper to view it in immersive full-screen mode before applying."],
-  ["🏠", "Set Wallpaper", "Apply wallpapers to Home Screen, Lock Screen, or Both — your choice, one tap."],
-  ["📤", "Share Wallpapers", "Share your favorite wallpapers with friends via the Android share sheet."],
-  ["✨", "Glassmorphism UI", "Frosted glass cards with BackdropFilter blur effects for a premium modern look."],
-  ["📴", "100% Offline", "All 700+ images are bundled locally. No internet connection needed ever."],
-  ["🎨", "Gradient Themes", "Each category has its own unique gradient color scheme and emoji icon."],
-  ["⚡", "Fast & Lightweight", "Built with Flutter for smooth 60fps scrolling and minimal battery usage."],
+const cats = [
+  "Animals", "Babies & Kids", "Birds", "Cars", "Flowers", "God", "Love",
+  "Music", "Nature", "Night", "Rain", "Random", "Sunshine", "Texture",
 ]
-  .map(
-    (f) =>
-      `<div class="feature-card glass-card"><div class="feature-card__icon">${f[0]}</div><h4>${f[1]}</h4><p>${f[2]}</p></div>`
-  )
+  .map((n) => `<span>${n}</span>`)
   .join("");
+
+const arrowFeatures = [
+  ["Tap to Clear", "Tap arrow tiles in the right order to clear the grid and complete each level."],
+  ["500 Puzzle Levels", "Hundreds of challenges that get tougher as you progress."],
+  ["Endless Mode", "Keep playing without limits and push your streak further."],
+  ["Colorful Grids", "Bright arrow tiles and polished visuals that make every puzzle pop."],
+  ["Quick Sessions", "Perfect for short play sessions — jump in, clear, and win."],
+  ["Think Fast", "Plan carefully — one wrong tap can change everything."],
+]
+  .map(([t, d]) => `<div class="feature"><strong>${t}</strong><p>${d}</p></div>`)
+  .join("");
+
+const hdFeatures = [
+  ["Category Grid", "Browse 14 categories with live preview thumbnails in a clear two-column layout."],
+  ["Full-Screen Preview", "Tap any wallpaper to view it immersive before you apply it."],
+  ["Set Wallpaper", "Apply to Home Screen, Lock Screen, or Both in one step."],
+  ["Share Wallpapers", "Share favorites through the Android share sheet."],
+  ["100% Offline", "All images are bundled locally. No connection needed."],
+  ["Fast & Light", "Built with Flutter for smooth scrolling and low overhead."],
+]
+  .map(([t, d]) => `<div class="feature"><strong>${t}</strong><p>${d}</p></div>`)
+  .join("");
+
+function appCard({ id, name, tagline, icon, play, meta, desc, highlights, features, catsHtml }) {
+  return `
+<article class="app-card" id="${id}">
+  <div class="app-card__icon"><img src="${icon}" alt="${name} icon" width="96" height="96"/></div>
+  <div class="app-card__body">
+    <div class="app-card__head">
+      <div>
+        <h3 class="app-card__title">${name}</h3>
+        <p class="app-card__tagline">${tagline}</p>
+        <div class="app-card__meta">
+          <span class="tag tag--live">Live</span>
+          ${meta.map((m) => `<span class="tag">${m}</span>`).join("")}
+        </div>
+      </div>
+      <a href="${play}" class="btn btn--dark" target="_blank" rel="noopener">Get on Play Store</a>
+    </div>
+    <p class="app-card__desc">${desc}</p>
+    <div class="app-card__highlights">${highlights.map((h) => `<span>${h}</span>`).join("")}</div>
+    <div class="app-card__features">
+      <h4>Features</h4>
+      <div class="features">${features}</div>
+    </div>
+    ${catsHtml || ""}
+    <div class="app-card__specs">
+      <h4>Details</h4>
+      <div class="specs">
+        <div class="spec"><div class="spec__label">Platform</div><div class="spec__value">Android</div></div>
+        <div class="spec"><div class="spec__label">Framework</div><div class="spec__value">Flutter</div></div>
+        <div class="spec"><div class="spec__label">Min SDK</div><div class="spec__value">Android 5.0+</div></div>
+        <div class="spec"><div class="spec__label">Language</div><div class="spec__value">English</div></div>
+      </div>
+    </div>
+  </div>
+</article>`;
+}
 
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Nexora AppLabs — Premium Android apps. HD Wallpaper app showcase."/>
-<meta name="theme-color" content="#0A0E1A"/>
-<title>Nexora AppLabs — HD Wallpaper & More</title>
-<link rel="icon" href="${NEXORA_ICON}" type="image/png"/>
+<meta name="description" content="Nexora AppLabs — Independent Android studio. Arrow Go! and HD Wallpaper."/>
+<meta name="theme-color" content="#0B1428"/>
+<title>Nexora AppLabs</title>
+<link rel="icon" href="${U.mark}" type="image/png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet"/>
 <style>${css}</style>
 </head>
 <body>
-<div class="bg-glow bg-glow--cyan" aria-hidden="true"></div>
-<div class="bg-glow bg-glow--purple" aria-hidden="true"></div>
-
 <header class="nav" id="nav">
   <div class="container nav__inner">
-    <a href="#" class="nav__logo"><img src="${NEXORA_LOGO}" alt="Nexora AppLabs" class="nav__logo-img" height="42" /></a>
-    <nav class="nav__links"><a href="#apps">Apps</a><a href="#hd-wallpaper">HD Wallpaper</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
-    <a href="#apps" class="btn btn--primary btn--sm nav__cta">Explore Apps</a>
-    <button class="nav__toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <a href="#" class="nav__logo"><img src="${U.logo}" alt="Nexora AppLabs" class="nav__logo-img"/></a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#apps">Apps</a>
+      <a href="#about">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#apps" class="btn btn--ghost nav__cta">View Apps</a>
+    <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   </div>
-  <div class="nav__mobile" id="navMobile" hidden><a href="#apps">Apps</a><a href="#hd-wallpaper">HD Wallpaper</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+  <div class="nav__mobile" id="navMobile" hidden>
+    <a href="#apps">Apps</a>
+    <a href="#about">Studio</a>
+    <a href="#contact">Contact</a>
+  </div>
 </header>
 
 <main>
 <section class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
   <div class="container hero__grid">
-    <div class="hero__content">
-      <div class="badge">Android App Studio</div>
-      <h1 class="hero__title">Crafting <span class="gradient-text">Premium</span><br/>Android Experiences</h1>
-      <p class="hero__desc">Nexora AppLabs builds beautiful Android apps — designed for real users, built to last.</p>
-          <div class="hero__actions">
-            <a href="#apps" class="btn btn--primary">View Our Apps</a>
-            <a href="${PLAY_STORE_URL}" class="btn btn--ghost" target="_blank" rel="noopener">HD Wallpaper on Play Store</a>
-          </div>
-      <div class="hero__stats">
-        <div class="stat"><span class="stat__value">1+</span><span class="stat__label">Live Apps</span></div>
-        <div class="stat"><span class="stat__value">700+</span><span class="stat__label">Wallpapers</span></div>
-        <div class="stat"><span class="stat__value">14</span><span class="stat__label">Categories</span></div>
+    <div class="hero__copy">
+      <img src="${U.logo}" alt="Nexora AppLabs" class="hero__brand"/>
+      <h1 class="hero__title">Independent Android studio</h1>
+      <p class="hero__lead">Focused apps. Clear design. Built for everyday use.</p>
+      <div class="hero__actions">
+        <a href="#apps" class="btn btn--primary">Explore Apps</a>
+        <a href="#contact" class="btn btn--ghost">Contact Us</a>
       </div>
     </div>
-    <div class="hero__visual">
-      <div class="phone-mockup">
-        <div class="phone-mockup__frame">
-          <div class="phone-mockup__notch"></div>
-          <div class="phone-mockup__screen">
-            <div class="mock-app">
-              <div class="mock-app__header">
-                <img class="mock-app__icon" src="${APP_ICON}" alt="HD Wallpaper" width="28" height="28" />
-                <div>
-                  <span class="mock-app__title">HD Wallpaper</span>
-                  <span class="mock-app__sub">Premium local wallpapers</span>
-                </div>
-              </div>
-              <div class="mock-app__grid">${mockGrid}</div>
-            </div>
-          </div>
-        </div>
-        <div class="phone-mockup__glow"></div>
-      </div>
+    <div class="hero__apps" aria-label="Featured apps">
+      <a href="#arrow-go" class="hero-app">
+        <img src="${U.arrow}" alt="Arrow Go!" width="88" height="88"/>
+        <span>Arrow Go!</span>
+      </a>
+      <a href="#hd-wallpaper" class="hero-app">
+        <img src="${U.hd}" alt="HD Wallpaper" width="88" height="88"/>
+        <span>HD Wallpaper</span>
+      </a>
     </div>
   </div>
 </section>
 
 <section class="section" id="apps">
   <div class="container">
-    <div class="section__header">
-      <span class="badge badge--purple">Our Apps</span>
-      <h2 class="section__title">App List</h2>
-      <p class="section__desc">Explore our published apps. More releases are on the way.</p>
+    <header class="section-head">
+      <p class="section-head__label">Products</p>
+      <h2 class="section-head__title">Our Apps</h2>
+      <p class="section-head__text">Available on Google Play.</p>
+    </header>
+    ${appCard({
+      id: "arrow-go",
+      name: "Arrow Go!",
+      tagline: "Tap · Clear · Win — a colorful arrow puzzle game",
+      icon: U.arrow,
+      play: ARROW_PLAY,
+      meta: ["Android", "Flutter", "Puzzle", "500 Levels"],
+      desc: "Arrow Go! is a fast-paced puzzle game where you tap colorful arrow tiles to clear the board. With 500 puzzle levels and Endless Mode, every move keeps you thinking, reacting, and chasing the next win.",
+      highlights: ["500 puzzle levels", "Endless Mode", "Tap · Clear · Win gameplay", "Colorful arrow grids", "Fast sessions", "Free on Google Play"],
+      features: arrowFeatures,
+    })}
+    ${appCard({
+      id: "hd-wallpaper",
+      name: "HD Wallpaper",
+      tagline: "700+ premium local wallpapers — offline and ready",
+      icon: U.hd,
+      play: HD_PLAY,
+      meta: ["Android", "Flutter", "14 Categories", "700+ Wallpapers"],
+      desc: "HD Wallpaper brings 700+ high-quality wallpapers to your device — fully offline, no internet required. Browse 14 curated categories, preview full screen, set Home / Lock / Both, or share with friends.",
+      highlights: ["700+ HD wallpapers — offline", "14 curated categories", "Set Home, Lock, or Both", "One-tap share", "Clean modern UI"],
+      features: hdFeatures,
+      catsHtml: `<div class="app-card__cats"><h4>Categories</h4><div class="cats">${cats}</div></div>`,
+    })}
+  </div>
+</section>
+
+<section class="section section--studio" id="about">
+  <div class="container studio">
+    <div class="studio__copy">
+      <p class="section-head__label">Studio</p>
+      <h2 class="section-head__title">About Nexora AppLabs</h2>
+      <p class="studio__lead">We are an independent Android studio. Every release is built with clear purpose, smooth performance, and respectful design.</p>
+      <ul class="studio__list">
+        <li><strong>Performance</strong> Lightweight builds for real devices</li>
+        <li><strong>Design</strong> Interfaces that stay out of the way</li>
+        <li><strong>Privacy</strong> Local-first where it matters</li>
+      </ul>
     </div>
-    <div class="coming-grid" style="margin-bottom:48px">
-      <a href="#hd-wallpaper" class="glass-card app-list-card">
-        <div class="app-list-card__inner">
-          ${appIconImg("app-list-card__icon app-icon--sm")}
-          <div>
-            <span class="badge badge--live">Live</span>
-            <h3 class="app-list-card__title">HD Wallpaper</h3>
-            <p class="app-list-card__meta">Premium local wallpapers • Android • Flutter</p>
-          </div>
-        </div>
-      </a>
-      <div class="coming-card glass-card"><span class="badge badge--soon">Coming Soon</span><div class="coming-card__emoji">🚀</div><h4>New App</h4><p>Something exciting is in development. Stay tuned!</p></div>
-      <div class="coming-card glass-card"><span class="badge badge--soon">Coming Soon</span><div class="coming-card__emoji">💡</div><h4>New App</h4><p>Another innovative app coming soon from Nexora AppLabs.</p></div>
+    <div class="studio__mark">
+      <img src="${U.mark}" alt="Nexora AppLabs" width="112" height="112"/>
     </div>
   </div>
 </section>
 
-<section class="section section--alt" id="hd-wallpaper">
-  <div class="container">
-    <article class="app-showcase">
-      <div class="app-hero-card glass-card">
-        ${appIconImg("app-icon--hd")}
-        <div class="app-hero-info">
-          <h3>HD Wallpaper</h3>
-          <p>Premium local wallpapers with glassmorphism UI</p>
-          <div class="app-meta">
-            <span class="badge badge--live">Live</span>
-            <span class="app-meta__tag">Android</span>
-            <span class="app-meta__tag">Flutter</span>
-            <span class="app-meta__tag">14 Categories</span>
-            <span class="app-meta__tag">700+ Wallpapers</span>
-          </div>
-        </div>
-        <div class="app-hero-actions">${playStoreBtn}</div>
-      </div>
-      <div class="app-description">
-        <p>HD Wallpaper is a beautifully crafted Android app with 700+ high-quality wallpapers — fully offline, no internet required. Browse 14 categories, preview in full screen, set as Home / Lock / Both wallpapers, or share with friends.</p>
-        <div class="app-highlights">
-          <span>700+ HD wallpapers — fully offline</span>
-          <span>14 curated categories</span>
-          <span>Set Home, Lock, or Both</span>
-          <span>One-tap share</span>
-          <span>Glassmorphism UI</span>
-          <span>Plus Jakarta Sans font</span>
-        </div>
-      </div>
-      <h4 class="subsection-title">Features</h4>
-      <div class="features-grid">${features}</div>
-      <div class="categories-section">
-        <h4>All 14 Categories</h4>
-        <div class="categories-grid">${catGrid}</div>
-      </div>
-      <h4 class="subsection-title">App Specifications</h4>
-      <div class="specs-grid">
-        <div class="spec-item"><div class="spec-item__label">Platform</div><div class="spec-item__value">Android</div></div>
-        <div class="spec-item"><div class="spec-item__label">Framework</div><div class="spec-item__value">Flutter</div></div>
-        <div class="spec-item"><div class="spec-item__label">Min SDK</div><div class="spec-item__value">Android 5.0+</div></div>
-        <div class="spec-item"><div class="spec-item__label">Language</div><div class="spec-item__value">English</div></div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="section" id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-content">
-        <span class="badge">About Us</span>
-        <h2 class="section__title">Nexora AppLabs</h2>
-        <p class="about-text">We are an independent Android app studio focused on creating polished, user-friendly applications.</p>
-        <ul class="about-list">
-          <li><span class="about-list__icon">⚡</span><div><strong>Performance First</strong><p>Fast, lightweight, and optimized for all Android devices.</p></div></li>
-          <li><span class="about-list__icon">🎨</span><div><strong>Beautiful Design</strong><p>Glassmorphism, gradients, and clean typography.</p></div></li>
-          <li><span class="about-list__icon">📱</span><div><strong>User Focused</strong><p>Features built around what users actually need.</p></div></li>
-          <li><span class="about-list__icon">🔒</span><div><strong>Privacy Friendly</strong><p>Local data, no tracking, no ads.</p></div></li>
-        </ul>
-      </div>
-      <div class="about-visual">
-        <div class="glass-card about-card">
-          <img src="${NEXORA_ICON}" alt="Nexora AppLabs" class="about-card__logo" width="80" height="80" />
-          <h3>Nexora AppLabs</h3>
-          <p>Building premium Android apps, one release at a time.</p>
-          <div class="tech-stack"><span class="tech-pill">Flutter</span><span class="tech-pill">Dart</span><span class="tech-pill">Material 3</span><span class="tech-pill">Android</span></div>
-        </div>
-      </div>
+<section class="section section--contact" id="contact">
+  <div class="container contact">
+    <div>
+      <p class="section-head__label">Contact</p>
+      <h2 class="section-head__title">Contact Us</h2>
+      <p class="section-head__text">Feedback, ideas, or collaboration — we’d love to hear from you.</p>
     </div>
-  </div>
-</section>
-
-<section class="section section--alt" id="contact">
-  <div class="container">
-    <div class="contact-card glass-card">
-      <div class="contact-card__content">
-        <span class="badge">Get in Touch</span>
-        <h2 class="section__title">Contact Nexora AppLabs</h2>
-        <p class="section__desc">Have feedback, feature requests, or partnership ideas? We'd love to hear from you.</p>
-      </div>
-      <div class="contact-card__actions">
-        <a href="mailto:${CONTACT_EMAIL}" class="btn btn--primary">Email Us</a>
-        <a href="#apps" class="btn btn--ghost">Browse Apps</a>
-      </div>
-    </div>
+    <a href="mailto:${EMAIL}" class="btn btn--primary">Contact Us</a>
   </div>
 </section>
 </main>
 
 <footer class="footer">
   <div class="container footer__inner">
-    <div class="footer__brand"><img src="${NEXORA_ICON}" alt="" class="footer__logo-icon" width="32" height="32" /><span>Nexora AppLabs</span></div>
-    <p class="footer__copy">&copy; 2026 Nexora AppLabs. All rights reserved.</p>
-    <div class="footer__links"><a href="#apps">Apps</a><a href="#hd-wallpaper">HD Wallpaper</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+    <div class="footer__brand">
+      <img src="${U.mark}" alt="" width="24" height="24"/>
+      <span>Nexora AppLabs</span>
+    </div>
+    <p>&copy; 2026 Nexora AppLabs</p>
+    <nav class="footer__links">
+      <a href="#apps">Apps</a>
+      <a href="#about">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
 </footer>
 
 <script>
-document.getElementById("nav").classList.toggle("nav--scrolled", window.scrollY > 20);
+document.getElementById("nav").classList.toggle("nav--scrolled", window.scrollY > 12);
 window.addEventListener("scroll", function () {
-  document.getElementById("nav").classList.toggle("nav--scrolled", window.scrollY > 20);
+  document.getElementById("nav").classList.toggle("nav--scrolled", window.scrollY > 12);
 });
-var t = document.getElementById("navToggle");
-var m = document.getElementById("navMobile");
+var t = document.getElementById("navToggle"), m = document.getElementById("navMobile");
 if (t && m) {
   t.onclick = function () {
     var open = m.hidden;
@@ -267,27 +268,16 @@ if (t && m) {
     t.setAttribute("aria-expanded", String(open));
   };
   m.querySelectorAll("a").forEach(function (a) {
-    a.onclick = function () {
-      m.hidden = true;
-      t.setAttribute("aria-expanded", "false");
-    };
+    a.onclick = function () { m.hidden = true; t.setAttribute("aria-expanded", "false"); };
   });
 }
 </script>
 </body>
 </html>`;
 
-const extraCss = `
-.app-list-card { display: block; padding: 28px; text-decoration: none; transition: transform 0.3s, border-color 0.3s; }
-.app-list-card:hover { transform: translateY(-4px); border-color: rgba(110,231,255,0.3); }
-.app-list-card__inner { display: flex; align-items: center; gap: 16px; }
-.app-list-card__icon { background: transparent; padding: 0; }
-.app-list-card__title { font-size: 1.3rem; font-weight: 800; margin: 8px 0 4px; }
-.app-list-card__meta { color: var(--text-muted); font-size: 0.9rem; }
-.app-icon--hd { background: transparent; padding: 0; }
-.subsection-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
-`;
-
-const finalHtml = html.replace("</style>", extraCss + "</style>");
-fs.writeFileSync("nexora-applab.html", finalHtml);
-console.log("Created nexora-applab.html (" + fs.statSync("nexora-applab.html").size + " bytes)");
+fs.writeFileSync("nexora-applab.html", html);
+console.log(
+  "Created nexora-applab.html (" +
+    (fs.statSync("nexora-applab.html").size / (1024 * 1024)).toFixed(2) +
+    " MB)"
+);

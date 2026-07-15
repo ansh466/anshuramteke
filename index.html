@@ -3,229 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Nexora AppLabs — Premium Android apps crafted with care. Explore HD Wallpaper and more." />
-  <meta name="theme-color" content="#0A0E1A" />
-  <title>Nexora AppLabs — Premium Android Apps</title>
+  <meta name="description" content="Nexora AppLabs — Independent Android studio. Arrow Go! and HD Wallpaper." />
+  <meta name="theme-color" content="#0B1428" />
+  <title>Nexora AppLabs</title>
   <link rel="icon" href="assets/nexora-icon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <div class="bg-glow bg-glow--cyan" aria-hidden="true"></div>
-  <div class="bg-glow bg-glow--purple" aria-hidden="true"></div>
-
-  <!-- Navigation -->
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#" class="nav__logo">
-        <img src="assets/nexora-logo.png" alt="Nexora AppLabs" class="nav__logo-img" height="42" />
+        <img src="assets/nexora-logo.png" alt="Nexora AppLabs" class="nav__logo-img" />
       </a>
-      <nav class="nav__links" aria-label="Main navigation">
+      <nav class="nav__links" aria-label="Main">
         <a href="#apps">Apps</a>
-        <a href="#about">About</a>
+        <a href="#about">Studio</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a href="#apps" class="btn btn--primary btn--sm nav__cta">Explore Apps</a>
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
+      <a href="#apps" class="btn btn--ghost nav__cta">View Apps</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span>
       </button>
     </div>
     <div class="nav__mobile" id="navMobile" hidden>
       <a href="#apps">Apps</a>
-      <a href="#about">About</a>
+      <a href="#about">Studio</a>
       <a href="#contact">Contact</a>
     </div>
   </header>
 
   <main>
-    <!-- Hero -->
     <section class="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
       <div class="container hero__grid">
-        <div class="hero__content reveal">
-          <div class="badge">Android App Studio</div>
-          <h1 class="hero__title">
-            Crafting <span class="gradient-text">Premium</span><br />
-            Android Experiences
-          </h1>
-          <p class="hero__desc">
-            Nexora AppLabs builds beautiful, performance-focused mobile apps —
-            designed for real users, built to last.
-          </p>
+        <div class="hero__copy">
+          <img src="assets/nexora-logo.png" alt="Nexora AppLabs" class="hero__brand" />
+          <h1 class="hero__title">Independent Android studio</h1>
+          <p class="hero__lead">Focused apps. Clear design. Built for everyday use.</p>
           <div class="hero__actions">
-            <a href="#apps" class="btn btn--primary">View Our Apps</a>
-            <a href="https://play.google.com/store/apps/details?id=com.mobile4k.hdwallpaper&hl=en_IN" class="btn btn--ghost" target="_blank" rel="noopener">HD Wallpaper on Play Store</a>
-          </div>
-          <div class="hero__stats">
-            <div class="stat">
-              <span class="stat__value" data-count="1">1+</span>
-              <span class="stat__label">Live Apps</span>
-            </div>
-            <div class="stat">
-              <span class="stat__value">700+</span>
-              <span class="stat__label">Wallpapers</span>
-            </div>
-            <div class="stat">
-              <span class="stat__value">14</span>
-              <span class="stat__label">Categories</span>
-            </div>
+            <a href="#apps" class="btn btn--primary">Explore Apps</a>
+            <a href="#contact" class="btn btn--ghost">Contact Us</a>
           </div>
         </div>
-        <div class="hero__visual reveal reveal--delay">
-          <div class="phone-mockup">
-            <div class="phone-mockup__frame">
-              <div class="phone-mockup__notch"></div>
-              <div class="phone-mockup__screen">
-                <div class="mock-app">
-                  <div class="mock-app__header">
-                    <img class="mock-app__icon" src="assets/hd-wallpaper-icon.png" alt="HD Wallpaper" width="28" height="28" />
-                    <div>
-                      <span class="mock-app__title">HD Wallpaper</span>
-                      <span class="mock-app__sub">Premium local wallpapers</span>
-                    </div>
-                  </div>
-                  <div class="mock-app__grid" id="mockGrid"></div>
-                </div>
-              </div>
-            </div>
-            <div class="phone-mockup__glow"></div>
-          </div>
+        <div class="hero__apps" aria-label="Featured apps">
+          <a href="#arrow-go" class="hero-app">
+            <img src="assets/arrow-go-icon.png" alt="Arrow Go!" width="88" height="88" />
+            <span>Arrow Go!</span>
+          </a>
+          <a href="#hd-wallpaper" class="hero-app">
+            <img src="assets/hd-wallpaper-icon.png" alt="HD Wallpaper" width="88" height="88" />
+            <span>HD Wallpaper</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Apps Showcase -->
     <section class="section" id="apps">
       <div class="container">
-        <div class="section__header reveal">
-          <span class="badge badge--purple">Our Apps</span>
-          <h2 class="section__title">App Showcase</h2>
-          <p class="section__desc">
-            Explore our published apps. More exciting projects are on the way —
-            stay tuned!
-          </p>
-        </div>
+        <header class="section-head reveal">
+          <p class="section-head__label">Products</p>
+          <h2 class="section-head__title">Our Apps</h2>
+          <p class="section-head__text">Available on Google Play.</p>
+        </header>
         <div id="appsContainer"></div>
       </div>
     </section>
 
-    <!-- About -->
-    <section class="section section--alt" id="about">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-content reveal">
-            <span class="badge">About Us</span>
-            <h2 class="section__title">Nexora AppLabs</h2>
-            <p class="about-text">
-              We are an independent Android app studio focused on creating
-              polished, user-friendly applications. Every app we ship combines
-              thoughtful design, smooth performance, and features that matter
-              in daily use.
-            </p>
-            <p class="about-text">
-              From glassmorphism UI to offline-first experiences — we pay
-              attention to the details that make an app feel premium.
-            </p>
-            <ul class="about-list">
-              <li>
-                <span class="about-list__icon">⚡</span>
-                <div>
-                  <strong>Performance First</strong>
-                  <p>Lightweight, fast, and optimized for all Android devices.</p>
-                </div>
-              </li>
-              <li>
-                <span class="about-list__icon">🎨</span>
-                <div>
-                  <strong>Beautiful Design</strong>
-                  <p>Modern UI with glassmorphism, gradients, and clean typography.</p>
-                </div>
-              </li>
-              <li>
-                <span class="about-list__icon">📱</span>
-                <div>
-                  <strong>User Focused</strong>
-                  <p>Features built around what users actually need.</p>
-                </div>
-              </li>
-              <li>
-                <span class="about-list__icon">🔒</span>
-                <div>
-                  <strong>Privacy Friendly</strong>
-                  <p>Local-first data — no unnecessary tracking or ads.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="about-visual reveal reveal--delay">
-            <div class="glass-card about-card">
-              <img src="assets/nexora-icon.png" alt="Nexora AppLabs" class="about-card__logo" width="80" height="80" />
-              <h3>Nexora AppLabs</h3>
-              <p>Building the future of Android apps, one release at a time.</p>
-              <div class="tech-stack">
-                <span class="tech-pill">Flutter</span>
-                <span class="tech-pill">Dart</span>
-                <span class="tech-pill">Material 3</span>
-                <span class="tech-pill">Android</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Coming Soon -->
-    <section class="section" id="coming-soon">
-      <div class="container">
-        <div class="section__header reveal">
-          <span class="badge badge--cyan">Pipeline</span>
-          <h2 class="section__title">Coming Soon</h2>
-          <p class="section__desc">
-            We're working on more apps. New releases will appear here automatically.
+    <section class="section section--studio" id="about">
+      <div class="container studio">
+        <div class="studio__copy reveal">
+          <p class="section-head__label">Studio</p>
+          <h2 class="section-head__title">About Nexora AppLabs</h2>
+          <p class="studio__lead">
+            We are an independent Android studio. Every release is built with clear purpose,
+            smooth performance, and respectful design.
           </p>
+          <ul class="studio__list">
+            <li><strong>Performance</strong> Lightweight builds for real devices</li>
+            <li><strong>Design</strong> Interfaces that stay out of the way</li>
+            <li><strong>Privacy</strong> Local-first where it matters</li>
+          </ul>
         </div>
-        <div class="coming-grid" id="comingSoonContainer"></div>
+        <div class="studio__mark reveal">
+          <img src="assets/nexora-icon.png" alt="Nexora AppLabs" width="112" height="112" />
+        </div>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section class="section section--alt" id="contact">
-      <div class="container">
-        <div class="contact-card glass-card reveal">
-          <div class="contact-card__content">
-            <span class="badge">Get in Touch</span>
-            <h2 class="section__title">Contact Nexora AppLabs</h2>
-            <p class="section__desc">
-              Have feedback, feature requests, or partnership ideas?
-              We'd love to hear from you.
-            </p>
-          </div>
-          <div class="contact-card__actions">
-            <a href="mailto:aramteke19@gmail.com" class="btn btn--primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Email Us
-            </a>
-            <a href="#apps" class="btn btn--ghost">Browse Apps</a>
-          </div>
+    <section class="section section--contact" id="contact">
+      <div class="container contact reveal">
+        <div>
+          <p class="section-head__label">Contact</p>
+          <h2 class="section-head__title">Contact Us</h2>
+          <p class="section-head__text">Feedback, ideas, or collaboration — we’d love to hear from you.</p>
         </div>
+        <a href="mailto:aramteke19@gmail.com" class="btn btn--primary">Contact Us</a>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <img src="assets/nexora-icon.png" alt="" class="footer__logo-icon" width="32" height="32" />
+        <img src="assets/nexora-icon.png" alt="" width="24" height="24" />
         <span>Nexora AppLabs</span>
       </div>
-      <p class="footer__copy">&copy; 2026 Nexora AppLabs. All rights reserved.</p>
-      <div class="footer__links">
+      <p>&copy; 2026 Nexora AppLabs</p>
+      <nav class="footer__links">
         <a href="#apps">Apps</a>
-        <a href="#about">About</a>
+        <a href="#about">Studio</a>
         <a href="#contact">Contact</a>
-      </div>
+      </nav>
     </div>
   </footer>
 
